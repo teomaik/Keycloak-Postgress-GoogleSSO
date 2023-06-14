@@ -9,8 +9,6 @@ services:
   stg_keycloak_postgres:
     container_name: stg_keycloak_postgres
     image: postgres
-    ports:
-      - 5997:5432
     networks:
       - stg_uom_network
     #command: postgres -c 'max_connections=200'
@@ -20,26 +18,28 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+    ports:
+      - 5997:5432
 
 
   stg_keycloak:
     container_name: stg_keycloak
     image: jboss/keycloak:latest
-    ports:
-      - 5999:8080
-      - 5998:8443
     networks:
       - stg_uom_network
     environment:
       DB_VENDOR: postgres
 #      DB_PORT: 5997
-      DB_ADDR: stg_postgres_keycloak
+      DB_ADDR: stg_keycloak_postgres
       DB_DATABASE: keycloak
       DB_SCHEMA: public
       DB_USER: keycloak
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: 1password9
+      KEYCLOAK_PASSWORD: 1password0
+    ports:
+      - 5999:8080
+      - 5998:8443
     depends_on:
       - stg_keycloak_postgres
     restart: unless-stopped
