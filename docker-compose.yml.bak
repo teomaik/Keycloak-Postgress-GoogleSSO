@@ -39,7 +39,7 @@ services:
       DB_USER: keycloak
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: 1password0
+      KEYCLOAK_PASSWORD: 1password9
     depends_on:
       - stg_keycloak_postgres
     restart: unless-stopped
